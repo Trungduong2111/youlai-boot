@@ -11,7 +11,7 @@ FROM eclipse-temurin:17-jre-jammy
 LABEL maintainer="youlai <youlaitech@163.com>"
 ENV TZ=Asia/Shanghai
 VOLUME /tmp
-COPY --from=builder /app/target/youlai-boot-*.jar app.jar
+COPY --from=builder /app/target/youlai-boot-4.1.0.jar app.jar
 EXPOSE 8000
 CMD java \
     -Xms512m -Xmx512m \
