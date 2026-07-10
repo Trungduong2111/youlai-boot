@@ -3,7 +3,8 @@ FROM maven:3.9-eclipse-temurin-17 AS builder
 WORKDIR /app
 COPY pom.xml .
 COPY src ./src
-RUN mvn clean package -DskipTests -B && ls -la target/
+RUN mvn clean package -DskipTests
+RUN ls -la target/
 
 # Stage 2: Runtime
 FROM eclipse-temurin:17-jre-jammy
