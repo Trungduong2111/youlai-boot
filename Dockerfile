@@ -1,23 +1,20 @@
-# 基础镜像
-FROM openjdk:17
+# Stage 1: Build
+FROM maven:3.9-eclipse-temurin-17 AS builder
+WORKDIR /app
+COPY pom.xml .
+RUN mvn dependency:go-offline -B
+COPY src ./src
+RUN mvn clean package -DskipTests -B
 
-# 维护者信息
+# Stage 2: Runtime
+FROM eclipse-temurin:17-jre-jammy
 LABEL maintainer="youlai <youlaitech@163.com>"
-
-# 设置时区（Debian直接使用环境变量）
 ENV TZ=Asia/Shanghai
-
-# 在运行时自动挂载 /tmp 目录为匿名卷
 VOLUME /tmp
-
-# 添加应用
-ADD target/youlai-boot.jar app.jar
-
-# 启动命令
+COPY --from=builder /app/target/youlai-boot-*.jar app.jar
+EXPOSE 8000
 CMD java \
     -Xms512m -Xmx512m \
     -Djava.security.egd=file:/dev/./urandom \
+    -Dserver.port=${PORT:-8000} \
     -jar /app.jar
-
-# 暴露端口
-EXPOSE 8989
