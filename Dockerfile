@@ -14,7 +14,8 @@ VOLUME /tmp
 COPY --from=builder /app/target/youlai-boot.jar app.jar
 EXPOSE 8000
 CMD java \
-    -Xms512m -Xmx512m \
+    -Xms128m -Xmx256m \
+    -XX:MaxMetaspaceSize=128m \
     -Djava.security.egd=file:/dev/./urandom \
     -Dserver.port=${PORT:-8000} \
     -jar /app.jar
