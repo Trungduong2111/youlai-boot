@@ -5,9 +5,9 @@ spring:
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     driver-class-name: com.mysql.cj.jdbc.Driver # 3.2.0开始支持SPI可省略此配置
-    url: jdbc:mysql://www.youlai.tech:3306/youlai_admin?zeroDateTimeBehavior=convertToNull&useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&autoReconnect=true&allowMultiQueries=true
-    username: youlai
-    password: 123456
+    url: jdbc:mysql://mysql-22d6ef60-nguyentrungduong21111998a-00cd.k.aivencloud.com:22402/youlai_admin?sslMode=REQUIRED&zeroDateTimeBehavior=convertToNull&useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&autoReconnect=true&allowMultiQueries=true
+    username: ${DB_USERNAME:avnadmin}
+    password: ${DB_PASSWORD}
   # Spring Boot Admin 监控配置
   boot:
     admin:
@@ -24,9 +24,12 @@ spring:
   data:
     redis:
       database: 12
-      host: www.youlai.tech
-      port: 6379
-      password: 123456
+      host: valkey-18532ee6-nguyentrungduong21111998a-00cd.e.aivencloud.com
+      port: 22403
+      username: ${REDIS_USERNAME:default}
+      password: ${REDIS_PASSWORD}
+      ssl:
+        enabled: true
       timeout: 10s
       lettuce:
         pool:
