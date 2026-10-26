@@ -1,19 +1,22 @@
 server:
-  port: 8000
+  port: ${PORT:8000}
 
 spring:
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     driver-class-name: com.mysql.cj.jdbc.Driver # 3.2.0开始支持SPI可省略此配置
-    url: jdbc:mysql://www.youlai.tech:3306/youlai_admin?zeroDateTimeBehavior=convertToNull&useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&autoReconnect=true&allowMultiQueries=true
-    username: youlai
-    password: 123456
+    url: ${DB_URL:jdbc:mysql://mysql-22d6ef60-nguyentrungduong21111998a-00cd.k.aivencloud.com:22402/youlai_admin?sslMode=REQUIRED&zeroDateTimeBehavior=convertToNull&useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&autoReconnect=true&allowMultiQueries=true}
+    username: ${DB_USERNAME:avnadmin}
+    password: ${DB_PASSWORD}
   data:
     redis:
       database: 11
-      host: www.youlai.tech
-      port: 6379
-      password: 123456
+      host: ${REDIS_HOST:valkey-18532ee6-nguyentrungduong21111998a-00cd.e.aivencloud.com}
+      port: ${REDIS_PORT:22403}
+      username: ${REDIS_USERNAME:default}
+      password: ${REDIS_PASSWORD}
+      ssl:
+        enabled: true
       timeout: 10s
       lettuce:
         pool:
@@ -74,7 +77,7 @@ security:
     access-token-time-to-live: 7200 # 访问令牌 有效期(单位：秒)，默认 2 小时，-1 表示永不过期
     refresh-token-time-to-live: 604800 # 刷新令牌有效期(单位：秒)，默认 7 天，-1 表示永不过期
     jwt:
-      secret-key: SecretKey012345678901234567890123456789012345678901234567890123456789 # JWT密钥(HS256算法至少32字符)
+      secret-key: ${JWT_SECRET:SecretKey012345678901234567890123456789012345678901234567890123456789} # JWT密钥(HS256算法至少32字符)
     redis-token:
       allow-multi-login: true # 是否允许多设备登录
   # 安全白名单路径，仅跳过 AuthorizationFilter 过滤器，还是会走 Spring Security 的其他过滤器(CSRF、CORS等)
